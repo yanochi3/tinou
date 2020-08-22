@@ -159,7 +159,7 @@ for epoch in range(0, num_epoch):
         ##### 課題2. 逆伝播
 
         # delta_outを定義する
-        delta_out = softmax(np.dot(W_out[:,T], z_out))-yi
+        delta_out = z_out-yi
 
         # 以下の行列の各列にdelta_1, ..., delta_Tを作成
         # backward関数の内部を作成
@@ -182,12 +182,12 @@ for epoch in range(0, num_epoch):
         # (np.c_は横方向の結合. Xをコンソールで見てみると
         #  何が行われいてるかわかってよい)
         X = np.c_[np.ones(d), xi] 
-        dEdW_in =np.sum(np.dot(delta,X[:,T].T))
+        dEdW_in =np.dot(delta,X)
 
         ## dEdWの作成
         # ヒント: Z_primeの0列目からT-1列目(つまり最後の列以外)は"Z_prime[:,:T]"で指定できる
         #         また，転置の存在に注意せよ
-        dEdW =  np.sum(np.dot(delta,Z_prime[:,:T].T))
+        dEdW =  np.dot(delta,Z_prime[:,:T].T)
         
         ##### パラメータの更新
         W_out -= eta*dEdW_out/epoch
