@@ -77,7 +77,7 @@ def backward(W, W_out, delta, delta_out, derivative):
     # 逆伝播のプログラムを書く
     # (転置の存在に注意)
     x = np.dot(W_out.T, delta_out)
-    delta_t = np.outer(x, derivative)
+    delta_t = x*derivative
     return delta_t
 
 def adam(W, m, v, dEdW, t, 
@@ -103,7 +103,7 @@ W_out = np.random.normal(0, 0.2, size=(m, q+1))
 
 ########## 確率的勾配降下法によるパラメータ推定
 # num_epoch = 50
-num_epoch = 10
+num_epoch = 5
 
 error = []
 error_test = []
@@ -159,7 +159,7 @@ for epoch in range(0, num_epoch):
         ##### 課題2. 逆伝播
 
         # delta_outを定義する
-        delta_out = softmax(np.dot(W_out[:,T], z_out.T))-yi
+        delta_out = softmax(np.dot(W_out[:,T], z_out))-yi
 
         # 以下の行列の各列にdelta_1, ..., delta_Tを作成
         # backward関数の内部を作成
@@ -175,19 +175,19 @@ for epoch in range(0, num_epoch):
         ## dEdW_outの作成
         # ヒント: np.dotかnp.outerのどちらを使うべきか適切に判断すること
         #         また，上で作成したZ_Tを利用できる
-        # dEdW_out = ...
+        dEdW_out = np.outer(delta_out,Z_T.T)
 
         ## dEdE_inの作成
         # ヒント: 以下のXが定数項含んだTx(d+1)行列 
         # (np.c_は横方向の結合. Xをコンソールで見てみると
         #  何が行われいてるかわかってよい)
         X = np.c_[np.ones(d), xi] 
-        # dEdW_in = ...
+        dEdW_in =np.sum(np.dot(delta,X[:,T].T))
 
         ## dEdWの作成
         # ヒント: Z_primeの0列目からT-1列目(つまり最後の列以外)は"Z_prime[:,:T]"で指定できる
         #         また，転置の存在に注意せよ
-        # dEdW = ...
+        dEdW =  np.sum(np.dot(delta,Z_prime[:,:T].T))
         
         ##### パラメータの更新
         W_out -= eta*dEdW_out/epoch
@@ -196,9 +196,9 @@ for epoch in range(0, num_epoch):
 
         ### 課題4 adamを作成して更新方法を以下に変更（上の確率勾配降下の更新は消す）
         n_update += 1
-        # W_out, m_out, v_out = adam(W_out, m_out, v_out, dEdW_out, n_update)
-        # W, m_hidden, v_hidden = adam(W, m_hidden, v_hidden, dEdW, n_update) 
-        # W_in, m_in, v_in = adam(W_in, m_in, v_in, dEdW_in, n_update)  
+        W_out, m_out, v_out = adam(W_out, m_out, v_out, dEdW_out, n_update)
+        W, m_hidden, v_hidden = adam(W, m_hidden, v_hidden, dEdW, n_update) 
+        W_in, m_in, v_in = adam(W_in, m_in, v_in, dEdW_in, n_update)  
 
     ##### training error
     error.append(sum(e)/n)
@@ -211,12 +211,11 @@ for epoch in range(0, num_epoch):
         
         ##### 順伝播
         Z_prime = np.zeros((q,T+1))
-        # for t in range(T):
+        for t in range(T):
         # 訓練の時と同じ手順でZ_primeを作成
         # (こちらではnabla_fは使用しないので, 最後に"[0]"を
         #  つけることで返り値を一つだけ受け取っている)
-            # Z_prime[???] = forward(np.append(1, xi[t,:]), Z_prime[???], W_in, W, sigmoid)[0]
-        
+            Z_prime[:,t+1] = forward(np.append(1, xi[t,:]), Z_prime[:,t], W_in, W, sigmoid)[0]
         z_out = softmax(np.dot(W_out, np.append(1, Z_prime[:,T])))        
         prob[i,:] = z_out
 
