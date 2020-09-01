@@ -1,0 +1,25 @@
+runfile('C:/Users/yanon/Dropbox/知能演習/6/CNN1.py', wdir='C:/Users/yanon/Dropbox/知能演習/6')
+C:\Users\yanon\Dropbox\知能演習\6\CNN1.py:20: RuntimeWarning: invalid value encountered in true_divide
+  return 255*(z+C)/(2*C)
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:397: UserWarning: Warning: converting a masked element to nan.
+  dv = (np.float64(self.norm.vmax) -
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:398: UserWarning: Warning: converting a masked element to nan.
+  np.float64(self.norm.vmin))
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:405: UserWarning: Warning: converting a masked element to nan.
+  a_min = np.float64(newmin)
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:410: UserWarning: Warning: converting a masked element to nan.
+  a_max = np.float64(newmax)
+<string>:6: UserWarning: Warning: converting a masked element to nan.
+C:\Users\yanon\anaconda3\lib\site-packages\numpy\ma\core.py:722: UserWarning: Warning: converting a masked element to nan.
+  data = np.array(a, copy=False, subok=subok)
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:397: UserWarning: Warning: converting a masked element to nan.
+  dv = (np.float64(self.norm.vmax) -
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:398: UserWarning: Warning: converting a masked element to nan.
+  np.float64(self.norm.vmin))
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:405: UserWarning: Warning: converting a masked element to nan.
+  a_min = np.float64(newmin)
+C:\Users\yanon\anaconda3\lib\site-packages\matplotlib\image.py:410: UserWarning: Warning: converting a masked element to nan.
+  a_max = np.float64(newmax)
+<string>:6: UserWarning: Warning: converting a masked element to nan.
+C:\Users\yanon\anaconda3\lib\site-packages\numpy\ma\core.py:722: UserWarning: Warning: converting a masked element to nan.
+  data = np.array(a, copy=False, subok=subok)
