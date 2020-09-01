@@ -28,7 +28,7 @@ def Convolution(X, V, act_func, H, M, padding, stride):
 
     ## スライド10ページを参考に畳み込み後のサイズを設定
     ## ヒント: int()で実数値を囲むと切り捨てされる
-    W_next = (int((W-K)/stride + 1))**2
+    W_next = int((W-H)/stride + 1)
 
     # paddingした後のX
     # ヒント: 0で初期化した以下の３次元配列の
@@ -49,7 +49,7 @@ def Convolution(X, V, act_func, H, M, padding, stride):
                 #         X_padded["i*ストライドサイズ":"i*ストライドサイズ + ??", "j"を使って1次元目と同様に指定, :] 
                 #         これと，今着目しているフィルター V[:,:,:,m] の要素ごとの積をとった後に和をとる
                 #         (np.sumで配列要素全ての和がとれる)
-                C=(X_padded[i*stride:i*stride+H, j*stride:j*stride+H, :])*(V[:,:,:,m])
+                C=(V[:,:,:,m]*X_padded[i*stride:i*stride+H, j*stride:j*stride+H, :])
                 U[i, j, m] = np.sum(C)
     
     # Uの値に活性化関数を適用して返す
@@ -62,7 +62,7 @@ def MaxPooling(Z_prev, H, padding, stride):
     
     # MaxPooling後のサイズの設定
     # ヒント: 畳み込みのときと同じでよい
-    W_next = (int((W-K)/stride + 1))**2
+    W_next = int((W-H)/stride + 1)
     # Padding
     # 畳み込みでの処理を参考に作成せよ
     Z_prev_padded = np.zeros((W+2*padding, W+2*padding, K))
@@ -74,7 +74,7 @@ def MaxPooling(Z_prev, H, padding, stride):
            for j in range(W_next):
                 # 畳み込みのときを参考に，Z_prevでの対象となる要素を指定する
                 # (1, 2次元目がmaxを探す対象となる部分配列で，3次元目はkを指定すればよい)
-                Z[i, j, k] = np.max(Z_prev_padded[i*stride:i*stride+H,j*stride:j*stride+H,K])
+                Z[i, j, k] = np.max(Z_prev_padded[i*stride:i*stride+H,j*stride:j*stride+H,k])
 
     return Z
 
