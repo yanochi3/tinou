@@ -3,7 +3,7 @@
 
 
 
-  •Ï”:‘O‚ÉH‚ğ‚Â‚¯‚éD  
+  å¤‰æ•°:å‰ã«ï¼Ÿã‚’ã¤ã‘ã‚‹ï¼  
 
   Examle:
   % Unify "Takayuki" "Takayuki"
@@ -29,21 +29,21 @@
   ?x = a.
   ?y = a.
 
-  Unify ‚ÍCƒ†ƒjƒtƒBƒP[ƒVƒ‡ƒ“Æ‡ƒAƒ‹ƒSƒŠƒYƒ€‚ğÀŒ»‚µC
-  ƒpƒ^[ƒ“•\Œ»‚ğ”äŠr‚µ‚Ä–µ‚‚Ì‚È‚¢‘ã“ü‚É‚æ‚Á‚Ä“¯ˆê‚Æ”»’f
-  ‚Å‚«‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚éD
+  Unify ã¯ï¼Œãƒ¦ãƒ‹ãƒ•ã‚£ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ç…§åˆã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã‚’å®Ÿç¾ã—ï¼Œ
+  ãƒ‘ã‚¿ãƒ¼ãƒ³è¡¨ç¾ã‚’æ¯”è¼ƒã—ã¦çŸ›ç›¾ã®ãªã„ä»£å…¥ã«ã‚ˆã£ã¦åŒä¸€ã¨åˆ¤æ–­
+  ã§ãã‚‹ã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹ï¼
 
-  ƒ|ƒCƒ“ƒgI
-  ‚±‚±‚Å‚ÍCƒXƒgƒŠƒ“ƒO“¯m‚Ì’Pˆê‰»‚Å‚ ‚é‚©‚çCoŒ»ŒŸ¸‚ğs‚¤•K—v‚Í‚È‚¢D
-  ‚µ‚©‚µC"?x is a"‚Æ‚¢‚¤•\‹L‚ğ"is(?x,a)"‚Æ‚·‚é‚È‚ÇC\‘¢‚ğg‚¤‚È‚ç‚ÎC
-  ’Pˆê‰»‚É‚¨‚¢‚ÄoŒ»ŒŸ¸‚ğs‚¤•K—v‚ª‚ ‚éD
-  —á‚¦‚ÎC"a(?x)"‚Æ"?x"‚ğ’Pˆê‰»‚·‚é‚Æ ?x = a(a(a(...))) ‚Æ‚È‚èC
-  –³ŒÀƒ‹[ƒv‚ÉŠ×‚Á‚Ä‚µ‚Ü‚¤D
+  ãƒã‚¤ãƒ³ãƒˆï¼
+  ã“ã“ã§ã¯ï¼Œã‚¹ãƒˆãƒªãƒ³ã‚°åŒå£«ã®å˜ä¸€åŒ–ã§ã‚ã‚‹ã‹ã‚‰ï¼Œå‡ºç¾æ¤œæŸ»ã‚’è¡Œã†å¿…è¦ã¯ãªã„ï¼
+  ã—ã‹ã—ï¼Œ"?x is a"ã¨ã„ã†è¡¨è¨˜ã‚’"is(?x,a)"ã¨ã™ã‚‹ãªã©ï¼Œæ§‹é€ ã‚’ä½¿ã†ãªã‚‰ã°ï¼Œ
+  å˜ä¸€åŒ–ã«ãŠã„ã¦å‡ºç¾æ¤œæŸ»ã‚’è¡Œã†å¿…è¦ãŒã‚ã‚‹ï¼
+  ä¾‹ãˆã°ï¼Œ"a(?x)"ã¨"?x"ã‚’å˜ä¸€åŒ–ã™ã‚‹ã¨ ?x = a(a(a(...))) ã¨ãªã‚Šï¼Œ
+  ç„¡é™ãƒ«ãƒ¼ãƒ—ã«é™¥ã£ã¦ã—ã¾ã†ï¼
 
   ***/
 
 import java.util.*;
-
+//import java.io.*;
 class Unify {
     public static void main(String arg[]){
     if(arg.length != 2){
@@ -60,11 +60,19 @@ class Unifier {
     StringTokenizer st2;
     String buffer2[];
     HashMap<String,String> vars;
+    boolean tf;
+    int v=0;
     
     Unifier(){
         vars = new HashMap<String,String>();
     }
-
+    Unifier(String string1,String string2){
+    	vars = new HashMap<String,String>();
+    	tf = unify(string1,string2);
+    }
+    public boolean tf(){
+    	return  tf;
+    }
     public boolean unify(String string1,String string2,HashMap<String,String> bindings){
         this.vars = bindings;
         if(unify(string1,string2)){
@@ -77,18 +85,23 @@ class Unifier {
     public boolean unify(String string1,String string2){
         //System.out.println(string1);
         //System.out.println(string2);
+    	// String fileName = "output.txt";
+    	 
+    	 
+        // åŒã˜ãªã‚‰æˆåŠŸ
+        if(string1.equals(string2)) {
+        	System.out.println(string2);	//å‡ºåŠ›
+        	return true;
+        }
     
-        // “¯‚¶‚È‚ç¬Œ÷
-        if(string1.equals(string2)) return true;
-    
-        // ŠeXƒg[ƒNƒ“‚É•ª‚¯‚é
+        // å„ã€…ãƒˆãƒ¼ã‚¯ãƒ³ã«åˆ†ã‘ã‚‹
         st1 = new StringTokenizer(string1);
         st2 = new StringTokenizer(string2);
     
-        // ”‚ªˆÙ‚È‚Á‚½‚ç¸”s
+        // æ•°ãŒç•°ãªã£ãŸã‚‰å¤±æ•—
         if(st1.countTokens() != st2.countTokens()) return false;
     
-        // ’è”“¯m
+        // å®šæ•°åŒå£«
         int length = st1.countTokens();
         buffer1 = new String[length];
         buffer2 = new String[length];
@@ -103,13 +116,21 @@ class Unifier {
         }
     
     
-        // ÅŒã‚Ü‚Å O.K. ‚È‚ç¬Œ÷
-        //System.out.println(vars.toString());	//o—Í‚Í‚¢‚ç‚È‚¢‚Ì‚ÅƒRƒƒ“ƒgƒAƒEƒg
+        // æœ€å¾Œã¾ã§ O.K. ãªã‚‰æˆåŠŸ
+        /*
+        try{PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileName,true), "UTF-8"));
+    	out.println(vars.toString());	//å‡ºåŠ›
+    	out.close(); 
+    	 } catch (IOException e) {e.printStackTrace(); // ä¾‹å¤–ãŒç™ºç”Ÿã—ãŸæ‰€ã¾ã§ã®ã‚¹ã‚¿ãƒƒã‚¯ãƒˆãƒ¬ãƒ¼ã‚¹ã‚’è¡¨ç¤º
+    	 }*/
         return true;
+        
+        
     }
 
     boolean tokenMatching(String token1,String token2){
         if(token1.equals(token2)) return true;
+        else v+=1;
         if( var(token1) && !var(token2)) return varMatching(token1,token2);
         if(!var(token1) &&  var(token2)) return varMatching(token2,token1);
         if( var(token1) &&  var(token2)) return varMatching(token1,token2);
@@ -156,12 +177,15 @@ class Unifier {
     
     
     boolean var(String str1){
-    // æ“ª‚ª ? ‚È‚ç•Ï”
+    // å…ˆé ­ãŒ ? ãªã‚‰å¤‰æ•°
     return str1.startsWith("?");
     }
+    HashMap<String,String> getVars(){
+    	return vars;
+    }
     
-    String getVartoken(String key) {
-    	return vars.get(key);
+    int getV() {
+    	return v;
     }
 
 }
